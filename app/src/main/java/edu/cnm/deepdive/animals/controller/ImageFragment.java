@@ -39,7 +39,7 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
     setupWebView(root);
 
     spinner = root.findViewById(R.id.animals_spinner);
-    spinner.setOnItemClickListener(this);
+    spinner.setOnItemSelectedListener(this);
 
     return root;
   }
@@ -55,9 +55,10 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
       public void onChanged(List<Animal> animals) {
         ImageFragment.this.animals = animals;
         ArrayAdapter<Animal> adapter = new ArrayAdapter<>(
-            ImageFragment.this.getContext(),R.layout.custom_spinner_item, animals
+            ImageFragment.this.getContext(), R.layout.custom_spinner_item, animals
         );
-
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
       }
     });
   }
@@ -81,8 +82,8 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
 
 
   @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-
+  public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+contentView.loadUrl(animals.get(pos).getUrl());
   }
 
   @Override
